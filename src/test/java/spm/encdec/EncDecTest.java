@@ -29,12 +29,18 @@ public class EncDecTest {
         EncDec encDec2 = new EncDec("password456");
         String testString = "Moje ime je Medvjedić Lino!";
 
+        byte[] encryptedString = new byte[0];
         try {
-            byte[] encryptedString = encDec1.encrypt(testString);
+            encryptedString = encDec1.encrypt(testString);
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
+            fail( "Dogodila se greška u kriptiranju.");
+        }
+
+        try {
             String decryptedString = encDec2.decrypt(encryptedString);
             assertNotEquals(testString, decryptedString);
         } catch (IllegalBlockSizeException | BadPaddingException e) {
-            assertTrue(true, "Dogodila se greška u kriptiranju/dekriptiranju.");
+            assertTrue(true);
         }
     }
 }
